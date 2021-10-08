@@ -1,0 +1,64 @@
+.product-area img {
+    width: 40%;
+}
+.variation-1{
+    margin-left: 1.1rem;
+}
+.variation-2{
+    margin-left: 2.4rem;
+}
+.variation-3{
+    margin-left: 3rem;
+}
+.variation-4{
+    margin-left: 1.6rem;
+}
+.product-variation ul li {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.product-variation .select-btn {
+    background: none;
+    margin: 5px;
+    outline: none;
+    border: 1px solid gray;
+    border-radius: 20px;
+}
+.product-variation .select-btn:hover{
+    background: rgb(155, 149, 149);
+
+}
+.selected{
+    border: 1px solid orange;
+    box-shadow:  0px 0px 6px orange;
+}
+.product-variation .color-box{
+    border: 1px solid gray;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: orange;
+}
+.quantity{
+    margin-left: 1.6rem;
+}
+.quantity button{
+    outline: none;
+    border: none;
+    background: rgb(245, 227, 194);
+    border-radius: 4px;
+    width: 27px;
+    height: 27px;
+}
+.quantity input{
+    width: 27px;
+    height: 27px;
+    outline: none;
+    border: none;
+    background: orange;
+    border-radius: 4px;
+}

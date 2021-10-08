@@ -1,18 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import Product from '../Product/Product';
-import fakeData from '../../fakeData/data.json'
 const Products = () => {
     const [products, setProducts] = useState([]);
+    const [combination, setCombination] = useState([])
+    const [quanity, setQuantity] = useState(1)
     useEffect(() => {
-        setProducts(fakeData)
+        const variation = 'https://raw.githubusercontent.com/qtecsolution/Sample-JSON/main/variation.json'
+        fetch(variation)
+        .then(res => res.json())
+        .then(data => setProducts(data));
+
+        const combination = 'https://raw.githubusercontent.com/qtecsolution/Sample-JSON/main/combination.json'
+        fetch(combination)
+        .then(res => res.json())
+        .then(data => setCombination(data))
     }, [])
 
-    console.log(products)
+    const handleQuantity = (isTrue) => {
+       if(isTrue){
+           setQuantity(quanity + 1)
+       }
+       else if(quanity > 1){
+           setQuantity(quanity - 1)
+       }
+    }
     return (
         <section>
             <div className="container">
                 <div className="row">
-                    {products.map(pd => <Product product={pd} key={pd.id}></Product>)}
+                    {products.map(pd => <Product handleQuantity={handleQuantity} quanity={quanity} product={pd} key={pd.id} combination={combination}></Product>)}
                 </div>
             </div>
         </section>
