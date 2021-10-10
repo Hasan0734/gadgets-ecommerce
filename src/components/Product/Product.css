@@ -41,7 +41,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: orange;
+    cursor: pointer;
 }
 .quantity{
     margin-left: 1.6rem;
@@ -61,4 +61,16 @@
     border: none;
     background: orange;
     border-radius: 4px;
+}
+.Gold_FDEED7{
+    background: rgb(253, 238, 215);
+}
+.Pacific,.Blue_314B56{
+    background: rgb(49, 75, 86);
+}
+.Graphite_4A4946{
+    background: rgb(74, 73, 70);
+}
+.Silver_F1F1EC{
+    background: rgb(241, 241, 236);
 }
