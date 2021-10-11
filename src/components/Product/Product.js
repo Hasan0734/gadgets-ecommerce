@@ -1,11 +1,12 @@
 
 import React, { useState } from 'react';
 import './Product.css'
-const Product = ({ product, combination, handleQuantity, quanity, selectedVariation }) => {
+const Product = ({ product, combination, handleQuantity, quanity, selectedVariation, productDefault }) => {
 
     const [allVariation, setAllVariation] = useState({ storage: 3480, color: 3483, sim: 3487, region: 3489 })
+   
 
-    
+
     selectedVariation(allVariation);
     
     const selectVariation = (id, combName) => {
@@ -28,10 +29,11 @@ const Product = ({ product, combination, handleQuantity, quanity, selectedVariat
     // selectedVariation(storageSelect.values[0], selectColor.values[0], selectSim.values[0], selectRegion.values[0])
     return (
         <div className="product-area d-flex">
-
+            
             <img className="" src={product.image} alt="" />
             <div className="mt-5">
                 <h3 className="pt-5">iPhone 12 Pro Max</h3>
+                <h3>{product.id}</h3>
                 <h4 className="text-secondary">TK.{product.charge}</h4>
                 <input type="checkbox" name="emi" id="emi" />
                 <label className="ms-1" htmlFor="emi"><small>Available EMI Offer <a href="view-plan" className="text-decoration-none text-warning">View Plans</a></small></label>

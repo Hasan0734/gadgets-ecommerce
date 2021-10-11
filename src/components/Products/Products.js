@@ -4,19 +4,23 @@ const Products = () => {
     const [products, setProducts] = useState([]);
     const [combination, setCombination] = useState([]);
     const [quanity, setQuantity] = useState(1);
-
+    const [newProduct, setNewProduct] = useState({})
+    const [productDefault, setProductDefault] = useState([])
 
     useEffect(() => {
         const variation = 'https://raw.githubusercontent.com/qtecsolution/Sample-JSON/main/variation.json'
         fetch(variation)
             .then(res => res.json())
-            .then(data => setProducts(data));
+            .then(data => {
+                setProducts(data);
+
+            }, []);
 
         const combination = 'https://raw.githubusercontent.com/qtecsolution/Sample-JSON/main/combination.json'
         fetch(combination)
             .then(res => res.json())
             .then(data => setCombination(data))
-    }, [])
+    })
 
     const handleQuantity = (isTrue) => {
         if (isTrue) {
@@ -26,24 +30,22 @@ const Products = () => {
             setQuantity(quanity - 1)
         }
     }
-
-    const [newProduct, setNewProduct] = useState([])
+   
+  
     const selectVariation = (vari) => {
         const comb = [vari.storage, vari.color, vari.sim, vari.region]
 
-        products.some((pd, index) => {
-            return pd.attribute_combination.every((prop, i) => {
-            if (comb[i] === prop) {
-               return  setNewProduct(products[index])
-                };
-               return false;
-            })
-            
-        });
-    }
+        products.filter((pd, index) => {
+            if (pd.attribute_combination.toString() === comb.toString()) {
+               
+                setNewProduct(products[index])
+                return true
+            }
+            return false
+        })
     
-    console.log(newProduct)
-  
+    }
+
     return (
         <section>
             <div className="container">
@@ -53,7 +55,7 @@ const Products = () => {
                         handleQuantity={handleQuantity}
                         quanity={quanity}
                         product={newProduct}
-                        
+                        productDefault = {productDefault}
                         combination={combination}>
                     </Product>}
                 </div>
