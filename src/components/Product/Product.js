@@ -4,15 +4,13 @@ import { useState } from 'react/cjs/react.development';
 import './Product.css'
 const Product = (props) => {
 
-    const {product, combination, handleQuantity, quanity , allCombination, selectedCombination, setAllCombination } = props
-    const alreadyCart = localStorage.getItem('cartProduct')
-    const [newCartProduct, setNewCartProduct] = useState(alreadyCart ? JSON.parse(alreadyCart) : [])
+    const { product, combination, handleQuantity, quanity, allCombination, selectedCombination, setAllCombination } = props
 
-
+    const [addCart, setAddCart] = useState([])
 
     selectedCombination(allCombination)
     const selectCombination = (id, combName) => {
-       
+
         if (combName === 'storage') {
 
             setAllCombination({ ...allCombination, storage: id })
@@ -29,11 +27,31 @@ const Product = (props) => {
         }
 
     }
-    const handleAddToCart =() => {
-        const addProduct = {...product, quanity}
-        console.log(addProduct)
-        localStorage.setItem('cartProduct',JSON.stringify([...addProduct, addProduct]))
+
+    const handleAddToCart = () => {
+        const addProduct = { ...product, quanity }
+
+        if (addCart.length) {
+            addCart.find((pd, index) => {
+                if (pd.id === addProduct.id) {
+                    const newQuantity = pd.quanity + addProduct.quanity
+                    const product = addCart[index]
+                    product.quanity = newQuantity
+                    setAddCart([product])
+                    
+                }
+                else {
+                    setAddCart([...addCart, addProduct])
+                  
+                }
+            })
+        } else {
+            setAddCart([...addCart, addProduct])
+
+        }
+        
     }
+        localStorage.setItem('cartProduct', JSON.stringify(addCart));
     return (
         <div className="product-area d-flex">
 
