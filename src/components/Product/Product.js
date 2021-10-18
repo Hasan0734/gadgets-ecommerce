@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useState } from 'react/cjs/react.development';
 import './Product.css'
 const Product = (props) => {
@@ -30,15 +31,17 @@ const Product = (props) => {
 
     const handleAddToCart = () => {
         const addProduct = { ...product, quanity }
-
-        if (addCart.length) {
-            addCart.find((pd, index) => {
+        const cartAddedProduct = JSON.parse(localStorage.getItem('cartProduct'))
+       
+        if (cartAddedProduct) {
+            cartAddedProduct.find((pd, index) => {
                 if (pd.id === addProduct.id) {
                     const newQuantity = pd.quanity + addProduct.quanity
-                    const product = addCart[index]
+                    const product = cartAddedProduct[index]
                     product.quanity = newQuantity
-                    setAddCart([product])
-                    
+                   
+                   const notMatch = cartAddedProduct.filter(pd => pd.id !== addProduct.id)
+                   setAddCart([...notMatch, product])
                 }
                 else {
                     setAddCart([...addCart, addProduct])
@@ -51,7 +54,10 @@ const Product = (props) => {
         }
         
     }
-        localStorage.setItem('cartProduct', JSON.stringify(addCart));
+    console.log(addCart)
+        if (addCart.length) {
+            localStorage.setItem('cartProduct', JSON.stringify(addCart));
+        }
     return (
         <div className="product-area d-flex">
 
@@ -123,6 +129,7 @@ const Product = (props) => {
                         </li>
                     </ul>
                     <button onClick={handleAddToCart} className="btn btn-warning ms-4 text-white">ADD TO CART</button>
+                    <Link to="/checkout" className="text-decoration-none text-warning ms-4">Go To Checkout</Link>
                 </div>
             </div>
 
