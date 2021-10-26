@@ -5,9 +5,9 @@ import { useState } from 'react/cjs/react.development';
 import './Product.css'
 const Product = (props) => {
 
-    const { product, combination, handleQuantity, quanity, allCombination, selectedCombination, setAllCombination } = props
-
-    const [addCart, setAddCart] = useState([])
+    const { product, combination, handleQuantity, quantity, allCombination, selectedCombination, setAllCombination } = props
+    const cartAddedProduct = JSON.parse(localStorage.getItem('cartProduct'))
+    const [addCart, setAddCart] = useState(cartAddedProduct || [])
 
     selectedCombination(allCombination)
     const selectCombination = (id, combName) => {
@@ -28,36 +28,34 @@ const Product = (props) => {
         }
 
     }
+    const handleAddToCart = (e) => {
+        e.preventDefault()
+        const addProduct = { ...product, quantity }
 
-    const handleAddToCart = () => {
-        const addProduct = { ...product, quanity }
-        const cartAddedProduct = JSON.parse(localStorage.getItem('cartProduct'))
-       
-        if (cartAddedProduct) {
-            cartAddedProduct.find((pd, index) => {
+        if (addCart.length > 0) {
+            addCart.map((pd, index) => {
                 if (pd.id === addProduct.id) {
-                    const newQuantity = pd.quanity + addProduct.quanity
-                    const product = cartAddedProduct[index]
-                    product.quanity = newQuantity
-                   
-                   const notMatch = cartAddedProduct.filter(pd => pd.id !== addProduct.id)
-                   setAddCart([...notMatch, product])
-                }
-                else {
+                    const newQuantity = pd.quantity + addProduct.quantity
+                    const product = addCart[index]
+                    product.quantity = newQuantity
+                    const OtherProduct = addCart.filter(pd => pd.id !== addProduct.id)
+
+                    setAddCart([...OtherProduct, product])
+
+                } else {
                     setAddCart([...addCart, addProduct])
-                  
                 }
             })
+
         } else {
             setAddCart([...addCart, addProduct])
-
         }
-        
     }
-    console.log(addCart)
-        if (addCart.length) {
-            localStorage.setItem('cartProduct', JSON.stringify(addCart));
-        }
+
+    if (addCart.length) {
+        localStorage.setItem('cartProduct', JSON.stringify(addCart));
+
+    }
     return (
         <div className="product-area d-flex">
 
@@ -65,7 +63,7 @@ const Product = (props) => {
             <div className="mt-5">
                 <h3 className="pt-5">iPhone 12 Pro Max</h3>
                 <h3>{product.id}</h3>
-                <h4 className="text-secondary">TK.{product.charge * quanity}</h4>
+                <h4 className="text-secondary">TK.{product.charge * quantity}</h4>
                 <input type="checkbox" name="emi" id="emi" />
                 <label className="ms-1" htmlFor="emi"><small>Available EMI Offer <a href="view-plan" className="text-decoration-none text-warning">View Plans</a></small></label>
                 <div className="product-variation border-top mt-3 pt-4">
@@ -123,12 +121,12 @@ const Product = (props) => {
                         <li>Quatity:
                             <div className="quantity">
                                 <button onClick={() => handleQuantity(true)} className="m-1">+</button>
-                                <input className="m-1 text-center" type="text" value={quanity} onScroll="none" />
+                                <input className="m-1 text-center" type="text" value={quantity} onScroll="none" />
                                 <button onClick={() => handleQuantity(false)} className="m-1">-</button>
                             </div>
                         </li>
                     </ul>
-                    <button onClick={handleAddToCart} className="btn btn-warning ms-4 text-white">ADD TO CART</button>
+                    <button onClick={(e) => handleAddToCart(e)} className="btn btn-warning ms-4 text-white">ADD TO CART</button>
                     <Link to="/checkout" className="text-decoration-none text-warning ms-4">Go To Checkout</Link>
                 </div>
             </div>

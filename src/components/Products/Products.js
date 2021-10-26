@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { ProductContext } from '../../App';
 import Product from '../Product/Product';
 const Products = () => {
-    const [products, setProducts] = useState([]);
-    const [combination, setCombination] = useState([]);
-    const [quanity, setQuantity] = useState(1);
+
+    const {products, setProducts,combination, setCombination} = useContext(ProductContext);
+    const [quantity, setQuantity] = useState(1);
     const [newProduct, setNewProduct] = useState({})
 
-    const [allCombination, setAllCombination] = useState({ storage: false, color: false, sim: false, region: false })
+    const [allCombination, setAllCombination] = useState({ storage: null, color: null, sim: null, region: null })
 
 
     useEffect(() => {
@@ -41,10 +43,10 @@ const Products = () => {
 
     const handleQuantity = (isTrue) => {
         if (isTrue) {
-            setQuantity(quanity + 1)
+            setQuantity(quantity + 1)
         }
-        else if (quanity > 1) {
-            setQuantity(quanity - 1)
+        else if (quantity > 1) {
+            setQuantity(quantity - 1)
         }
     }
 
@@ -67,7 +69,7 @@ const Products = () => {
                     {<Product
                         selectedCombination={selectedCombination}
                         handleQuantity={handleQuantity}
-                        quanity={quanity}
+                        quantity={quantity}
                         product={newProduct}
                         setAllCombination={setAllCombination}
                         allCombination={allCombination}
